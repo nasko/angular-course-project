@@ -9,8 +9,6 @@ export class ShoppingListService {
     new Ingredient('Tomatoes', 10),
   ];
 
-  newIngredient = new EventEmitter<Ingredient>();
-
   addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
     this.ingredientsChanged.emit(this.ingredients.slice());
@@ -19,5 +17,18 @@ export class ShoppingListService {
   // Return a copy of the property instead of reference
   getIngredients() {
     return this.ingredients.slice();
+  }
+
+  addIngredients(ingredients: Ingredient[]) {
+    // Results in too many event emissions
+    //
+    // for(let ingredient of ingredients) {
+    //   this.addIngredient(ingredient);
+    // }
+
+    // The spread operator extracts an array into a list of values
+    this.ingredients.push(...ingredients);
+
+    this.ingredientsChanged.emit(this.ingredients.slice());
   }
 }
