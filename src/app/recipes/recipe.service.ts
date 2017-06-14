@@ -1,14 +1,15 @@
 import {Recipe} from './recipe.model';
-import {EventEmitter, Injectable} from '@angular/core';
 import {Ingredient} from '../shared/ingredient.model';
 import {ShoppingListService} from '../shopping-list/shopping-list.service';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class RecipeService {
-  recipeSelected = new EventEmitter<Recipe>();
+  // recipeSelected = new EventEmitter<Recipe>();
 
   private recipes: Recipe[] = [
     new Recipe(
+      1,
       'Tasty Schnitzel',
       'This is simply a test 1',
       'http://assets-jpcust.jwpsrv.com/thumbs/tjNwoclK-720.jpg',
@@ -17,6 +18,7 @@ export class RecipeService {
       ]
     ),
     new Recipe(
+      2,
       'Big Fat Burger',
       'This is simply a test 1',
       'http://assets-jpcust.jwpsrv.com/thumbs/tjNwoclK-720.jpg',
@@ -27,6 +29,15 @@ export class RecipeService {
   ];
 
   constructor(private slService: ShoppingListService) {}
+
+  getRecipe(id: number) {
+    const recipe = this.recipes.find(
+      (r) => {
+        return r.id === id;
+      }
+    );
+    return recipe;
+  }
 
   // Return a copy of the property instead of reference
   getRecipes() {
